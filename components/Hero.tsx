@@ -37,7 +37,7 @@ const Hero: React.FC<HeroProps> = ({ onInstallClick }) => {
           transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
           whileHover={{ scale: 1.1, rotate: 5 }}
           src={LOGO_URL} 
-          alt="Ya3m Logo" 
+          alt="لوجو ياعم دليفري - مطعم ياعم دوت كوم أسرع دليفري في مصر" 
           className="h-32 md:h-48 object-contain mb-4 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] relative z-10"
         />
         
@@ -54,7 +54,7 @@ const Hero: React.FC<HeroProps> = ({ onInstallClick }) => {
               className="mb-8 bg-white/10 hover:bg-white/20 text-[#FAB520] border border-[#FAB520]/30 px-6 py-2.5 rounded-2xl flex items-center gap-2 font-bold text-sm transition-all relative z-20 shadow-xl"
             >
               <Smartphone className="w-5 h-5" />
-              <span>تحميل تطبيق يا عم</span>
+              <span>تحميل تطبيق ياعم دليفري</span>
             </motion.button>
           )}
         </AnimatePresence>
@@ -67,7 +67,7 @@ const Hero: React.FC<HeroProps> = ({ onInstallClick }) => {
         >
           <h1 className="text-5xl md:text-7xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar'] group-hover:text-[#FAB520] transition-colors">
             أسرع دليفري في <br/> 
-            <span class="text-[#FAB520] drop-shadow-[0_5px_15_rgba(250,181,32,0.3)]">مصر يا عم!</span>
+            <span className="text-[#FAB520] drop-shadow-[0_5px_15_rgba(250,181,32,0.3)]">مصر يا عم!</span>
           </h1>
           
           <div className="flex flex-col items-center gap-4">
@@ -78,11 +78,11 @@ const Hero: React.FC<HeroProps> = ({ onInstallClick }) => {
               className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-4 rounded-[2rem] inline-block shadow-2xl"
             >
               <p className="text-lg md:text-xl text-gray-300 font-bold mb-2">
-                كبدة • سجق • حواوشي
+                سندوتشات ياعم: كبدة • سجق • حواوشي
               </p>
               <div className="flex items-center justify-center gap-2 text-xs md:text-sm text-[#FAB520]">
                   <Star className="w-3 h-3 fill-current" />
-                  <span className="font-bold">أكل بيتي عالي الجودة بيتحضرلك أول بأول</span>
+                  <span className="font-bold">أكل مطعم ياعم البيتي عالي الجودة بيتحضرلك أول بأول</span>
                   <Star className="w-3 h-3 fill-current" />
               </div>
             </motion.div>
@@ -94,7 +94,7 @@ const Hero: React.FC<HeroProps> = ({ onInstallClick }) => {
               className="flex items-center gap-2 text-[#FAB520] bg-[#FAB520]/10 px-4 py-2 rounded-full border border-[#FAB520]/20 font-bold text-xs md:text-sm"
             >
               <Truck className="w-4 h-4" />
-              <span>خدمة التوصيل بـ 20 جنيه بس!</span>
+              <span>خدمة ياعم دليفري بـ 20 جنيه بس!</span>
             </motion.div>
 
             <motion.div
@@ -108,7 +108,7 @@ const Hero: React.FC<HeroProps> = ({ onInstallClick }) => {
         </motion.div>
       </div>
       
-      {/* Entertaining floating elements */}
+      {/* Floating Elements for visual flavor */}
       <motion.div
         animate={{ 
           x: [-200, 1200],
@@ -118,28 +118,6 @@ const Hero: React.FC<HeroProps> = ({ onInstallClick }) => {
         className="absolute bottom-10 left-0 text-5xl opacity-40 pointer-events-none select-none z-0"
       >
         🛵💨
-      </motion.div>
-
-      <motion.div
-        animate={{ 
-          y: [0, -20, 0],
-          rotate: [0, 10, -10, 0]
-        }}
-        transition={{ duration: 5, repeat: Infinity }}
-        className="absolute top-20 right-[10%] text-4xl opacity-20 pointer-events-none z-0"
-      >
-        🥪
-      </motion.div>
-
-      <motion.div
-        animate={{ 
-          y: [0, 20, 0],
-          rotate: [0, -15, 15, 0]
-        }}
-        transition={{ duration: 6, repeat: Infinity }}
-        className="absolute bottom-40 left-[15%] text-4xl opacity-20 pointer-events-none z-0"
-      >
-        🥘
       </motion.div>
     </div>
   );

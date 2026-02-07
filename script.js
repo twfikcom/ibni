@@ -29,7 +29,7 @@ const SANDWICH_ITEMS = [
   { 
     name: 'مكرونة بالبشامل لفرد واحد', 
     price: 95, 
-    image: 'https://sayedsamkary.com/%D9%85%D9%83%D8%B1%D9%88%D9%86%D8%A9%20%D8%A8%D8%A7%D9%84%D8%A8%D8%B4%D8%A7%D9%85%D9%8A%D9%84.png' 
+    image: 'https://sayedsamkary.com/%D9%85%D9%83%D8%B1%D9%88%D9% opening hours 1.png' 
   },
   { 
     name: 'كرات بطاطس بالجبنة لفرد واحد', 
@@ -78,12 +78,14 @@ function startPreloader() {
         preloader.classList.add('opacity-0');
         setTimeout(() => {
           preloader.style.display = 'none';
-          mainContent.classList.remove('opacity-0');
-          mainContent.classList.add('opacity-100');
+          if (mainContent) {
+            mainContent.classList.remove('opacity-0');
+            mainContent.classList.add('opacity-100');
+          }
         }, 500);
       }, 600);
     }
-    loaderBar.style.width = `${progress}%`;
+    if (loaderBar) loaderBar.style.width = `${progress}%`;
   }, 100);
 }
 
@@ -105,16 +107,13 @@ function renderSandwiches() {
         <div class="flex flex-col sm:flex-row items-center gap-5">
           <!-- Product Image -->
           <div class="w-full sm:w-32 h-32 shrink-0 rounded-[2rem] overflow-hidden border-2 border-white/5 shadow-lg group">
-             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+             <img src="${item.image}" alt="${item.name} - من مطعم ياعم دليفري ياعم دوت كوم" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
           </div>
 
           <!-- Product Details -->
           <div class="flex-1 text-center sm:text-right">
             <h3 class="text-xl md:text-2xl font-['Lalezar'] mb-1">${item.name}</h3>
             <p class="text-[#FAB520] font-bold text-lg">${item.price} ج.م</p>
-            ${item.name === 'صينية شهية لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">تشكيلة كفته وسجق</p>' : ''}
-            ${item.name === 'مكرونة بالبشامل لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">أحلى مكرونة بشاميل سخنة</p>' : ''}
-            ${item.name === 'كرات بطاطس بالجبنة لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">مقرمشة من برة وغرقانة جبنة</p>' : ''}
           </div>
           
           <!-- Controls -->
@@ -172,11 +171,15 @@ function updateSauceQty(delta) {
   }
   
   if (sauceQuantity > 0) {
-    sauceBtn.classList.add('bg-[#FAB520]', 'border-black', 'text-black');
-    sauceBtn.classList.remove('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
+    if (sauceBtn) {
+      sauceBtn.classList.add('bg-[#FAB520]', 'border-black', 'text-black');
+      sauceBtn.classList.remove('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
+    }
   } else {
-    sauceBtn.classList.remove('bg-[#FAB520]', 'border-black', 'text-black');
-    sauceBtn.classList.add('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
+    if (sauceBtn) {
+      sauceBtn.classList.remove('bg-[#FAB520]', 'border-black', 'text-black');
+      sauceBtn.classList.add('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
+    }
   }
   
   updateMainSummary();
@@ -200,23 +203,23 @@ function updateMainSummary() {
   subtotal += (sauceQuantity * SAUCE_PRICE);
   
   if (subtotal > 0) {
-    summaryBox.classList.remove('hidden');
-    totalEl.innerText = `${subtotal + DELIVERY_FEE} ج.م`;
+    if (summaryBox) summaryBox.classList.remove('hidden');
+    if (totalEl) totalEl.innerText = `${subtotal + DELIVERY_FEE} ج.م`;
   } else {
-    summaryBox.classList.add('hidden');
+    if (summaryBox) summaryBox.classList.add('hidden');
   }
 }
 
 function toggleCart() {
   const overlay = document.getElementById('cart-drawer-overlay');
   const drawer = document.getElementById('cart-drawer');
-  if (overlay.style.display === 'block') {
-    drawer.classList.remove('open');
-    setTimeout(() => overlay.style.display = 'none', 500);
+  if (overlay && overlay.style.display === 'block') {
+    if (drawer) drawer.classList.remove('open');
+    setTimeout(() => { if (overlay) overlay.style.display = 'none'; }, 500);
   } else {
-    overlay.style.display = 'block';
+    if (overlay) overlay.style.display = 'block';
     renderCartSummary();
-    setTimeout(() => drawer.classList.add('open'), 10);
+    setTimeout(() => { if (drawer) drawer.classList.add('open'); }, 10);
   }
 }
 
@@ -240,112 +243,16 @@ function renderCartSummary() {
           <div class="p-4 bg-white/5 rounded-2xl border border-white/5 flex justify-between items-center">
             <div>
               <h4 class="font-bold text-base leading-tight">${name} (عدد ${item.quantity})</h4>
-              ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'].includes(name) ? `<span class="text-[9px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
+              ${!noBreadOptions.includes(name) ? `<span class="text-[9px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
             </div>
             <span class="font-bold text-[#FAB520] text-sm">${item.quantity * item.price} ج.م</span>
           </div>
         `).join('')}
-        ${sauceQuantity > 0 ? `
-          <div class="p-3.5 bg-[#FAB520]/10 rounded-xl border border-[#FAB520]/20 flex justify-between items-center text-[#FAB520] text-sm">
-            <span class="font-bold">صوص أعجوبة السحري (عدد ${sauceQuantity})</span>
-            <span class="font-bold">${sauceQuantity * SAUCE_PRICE} ج.م</span>
-          </div>
-        ` : ''}
-        <div class="p-3.5 bg-white/5 rounded-xl flex justify-between items-center text-gray-400 text-xs">
-            <span>مصاريف التوصيل</span>
-            <span>${DELIVERY_FEE} ج.م</span>
-        </div>
       </div>
     `;
   }
   initIcons();
 }
-
-// Order Form Submission
-const orderForm = document.getElementById('order-form');
-if(orderForm) {
-  orderForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('form-name').value;
-    const phone = document.getElementById('form-phone').value;
-    const address = document.getElementById('form-address').value;
-    const notes = document.getElementById('form-notes').value;
-    const btn = document.getElementById('submit-btn');
-    
-    if (!name || !phone || !address) return;
-    
-    btn.disabled = true;
-    btn.innerHTML = `<i data-lucide="loader-2" class="w-6 h-6 loading-spin"></i><span>جاري الطيران...</span>`;
-    initIcons();
-  
-    try {
-      const orderDetails = Object.entries(cart).map(([name, item]) => 
-        `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
-      ).join('\n') + (sauceQuantity > 0 ? `\n+ صوص أعجوبة السحري (عدد ${sauceQuantity})` : '');
-      
-      let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      subtotal += (sauceQuantity * SAUCE_PRICE);
-      
-      const response = await fetch("https://formspree.io/f/xdazllep", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-            الاسم: name,
-            التليفون: phone,
-            العنوان: address,
-            الملاحظات: notes,
-            الطلب: orderDetails,
-            الإجمالي: (subtotal + DELIVERY_FEE) + " ج.م"
-        })
-      });
-  
-      if (response.ok) {
-        document.getElementById('success-screen').style.display = 'flex';
-        // Show success install button if prompt is available
-        if (deferredPrompt) {
-            document.getElementById('install-btn-success').classList.remove('hidden');
-        }
-        setTimeout(() => {
-          if (!deferredPrompt) location.reload();
-        }, 8000);
-      } else {
-        alert('يا عم حصل غلط في الإرسال، جرب تاني!');
-        btn.disabled = false;
-        btn.innerHTML = `<i data-lucide="send" class="w-8 h-8"></i><span>اطلب الآن يا عم!</span>`;
-        initIcons();
-      }
-    } catch (err) {
-      alert('يا عم النت فيه مشكلة، جرب تاني!');
-      btn.disabled = false;
-      btn.innerHTML = `<i data-lucide="send" class="w-8 h-8"></i><span>اطلب الآن يا عم!</span>`;
-      initIcons();
-    }
-  });
-}
-
-// PWA Install Prompt Logic
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const heroInstallBtn = document.getElementById('install-btn-hero');
-    if (heroInstallBtn) heroInstallBtn.classList.remove('hidden');
-});
-
-async function handleInstallClick() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-    }
-    deferredPrompt = null;
-    document.getElementById('install-btn-hero').classList.add('hidden');
-    document.getElementById('install-btn-success').classList.add('hidden');
-}
-
-document.getElementById('install-btn-hero')?.addEventListener('click', handleInstallClick);
-document.getElementById('install-btn-success')?.addEventListener('click', handleInstallClick);
 
 // Start Everything
 window.onload = () => {
